@@ -25,6 +25,9 @@ int main() {
 		write_to_file(OUTPUT_LOG, "Help");
 		// Помощь!!!
 		break;
+	    case ACTION_NEW_GAME:
+		write_to_file(OUTPUT_LOG, "New Game");
+		new_game(&game);
 	    case ACTION_REVEAL:
 		write_to_file(OUTPUT_LOG, "Reveal (%d %d)", x, y);
 		reveal_cell(&game.board, x, y);
