@@ -157,7 +157,6 @@ int count_bombs_left(Board *board) {
 
     for (int x = 0; x < BOARD_SIZE; x++) {
         for (int y = 0; y < BOARD_SIZE; y++) {
-	    int has_bomb   = board->cells[x][y].has_bomb;
             int cell_state = board->cells[x][y].state;
 	    
 	    if (cell_state == CELL_FLAGGED)
