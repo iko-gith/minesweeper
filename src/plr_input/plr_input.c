@@ -32,6 +32,8 @@ int get_plr_input(int *x, int *y) {
         case 'H':
 	    // Вывод комманд, позже    
 	    break;
+	case 'N':
+	    return ACTION_NEW_GAME;
 	case 'R':
             if (scanf("%d %d", x, y) == 2)
                 return ACTION_REVEAL;
