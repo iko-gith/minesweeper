@@ -30,8 +30,7 @@ int get_plr_input(int *x, int *y) {
     cmd = toupper(cmd);
     switch(cmd) {
         case 'H':
-	    // Вывод комманд, позже    
-	    break;
+            return ACTION_HELP;   
 	case 'N':
 	    return ACTION_NEW_GAME;
 	case 'R':
@@ -45,6 +44,10 @@ int get_plr_input(int *x, int *y) {
 	case 'S':
 	    if (scanf("%d %d", x, y) == 2)
 		return ACTION_CHANGE_BOARD;
+	    break;
+	case 'B':
+	    if (scanf("%d", x) == 1)
+		return ACTION_CHANGE_BOMBS;
 	    break;
 	case 'Q':
 	    return ACTION_QUIT;
