@@ -28,6 +28,7 @@ int main() {
 	    case ACTION_NEW_GAME:
 		write_to_file(OUTPUT_LOG, "New Game");
 		new_game(&game);
+		break;
 	    case ACTION_REVEAL:
 		write_to_file(OUTPUT_LOG, "Reveal (%d %d)", x, y);
 		reveal_cell(&game.board, x, y);
@@ -40,6 +41,11 @@ int main() {
 		write_to_file(OUTPUT_LOG, "Quit");
 		playing = 0;
 		break;
+            case ACTION_CHANGE_BOARD:
+		write_to_file(OUTPUT_LOG, "\nUpdate board size (%d %d)", x, y);
+		update_board_size(&game.board, x, y);
+		new_game(&game);
+		break;
 	    default:
 		write_to_file(OUTPUT_LOG, "Invalid");
 	        break;
@@ -50,6 +56,7 @@ int main() {
             render_game(&game);
 	}
     }
-
+    
+    free_board(&game.board);
     return 0;
 }
