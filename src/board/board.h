@@ -1,7 +1,6 @@
 #ifndef BOARD_H
 #define BOARD_H
 
-#define BOARD_SIZE 10
 #define BOMBS_COUNT 20
 
 #include "../../constants.h"
@@ -19,16 +18,20 @@ typedef struct {
 } Cell;
 
 typedef struct {
-    Cell cells[BOARD_SIZE][BOARD_SIZE];
+    Cell **cells;
+    int height;
+    int width;
 } Board;
 
-int out_of_bounds(int x, int y);
+int out_of_bounds(Board *board, int x, int y);
+void free_board(Board *board);
+void update_board_size(Board *board, int height, int width);
 void init_board(Board *board);
 void reveal_cell(Board *board, int x, int y);
 void reveal_all_cells(Board *board);
 void toggle_flag(Board* board, int x, int y);
 int is_game_lost(Board *board);
 int is_game_won(Board *board);
-int count_bombs_left(Board *board);
+int count_flagged_bombs(Board *board);
 
 #endif
