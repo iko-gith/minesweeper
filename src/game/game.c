@@ -6,15 +6,23 @@ void init_game(GameInfo* game) {
     init_board(&game->board);
     
     // Инициализация данных игры
-    game->state      = GAME_PROC;
-    game->mines_left = BOMBS_COUNT;
+    if (!game->board.cells) {
+        game->state = GAME_NOT_INIT;
+	game->mines_left = 0;
+    } else {
+        game->state = GAME_PROC;
+	game->mines_left = BOMBS_COUNT;
+    }
 }
 
 void update_game(GameInfo* game) {
     // Обновление и проверка статуса игры
     write_to_file(OUTPUT_LOG, "\n> Game status: ");
-
-    if (is_game_lost(&game->board)) {
+    
+    if (game->state == GAME_NOT_INIT) {
+        write_to_file(OUTPUT_LOG, "Not initialized");
+    }
+    else if (is_game_lost(&game->board)) {
         write_to_file(OUTPUT_LOG, "Lost");
 	reveal_all_cells(&game->board);
 	game->state = GAME_LOST;
