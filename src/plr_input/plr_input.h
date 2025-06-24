@@ -10,7 +10,8 @@ enum {
     ACTION_FLAG         = 3,
     ACTION_QUIT         = 4,
     ACTION_NEW_GAME     = 5,
-    ACTION_CHANGE_BOARD = 6
+    ACTION_CHANGE_BOARD = 6,
+    ACTION_CHANGE_BOMBS = 7
 };
 
 void clear_input();
