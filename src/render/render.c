@@ -27,6 +27,7 @@ void render_cell(const Cell *cell) {
 void render_board(const Board *board) {
     int height = board->height;
     int width  = board->width;
+
     printf("\n   ");
     for (int x = 0; x < height; x++)
         printf("%2d%s", x, (x+1>=height) ? "\n" : "");
@@ -51,7 +52,7 @@ void render_board(const Board *board) {
 
 void render_header(const GameInfo *game) {
     printf("===Minesweeper===\n"
-           "Flags: %d\n", game->mines_left);
+           "Total bombs: %d\n", game->bombs);
     
     printf("Game State: ");
     switch(game->state) {
@@ -67,15 +68,45 @@ void render_header(const GameInfo *game) {
 	case GAME_NOT_INIT:
 	    printf("Not initialized\n");
 	    break;
+	default:
+	    printf("NaN\n");
+	    break;
     }
+}
+
+void render_help_list() {
+    printf("List of commands:\n"
+           "H - List of commands\n"
+	   "R (number) (number) - Reveal cell using coordinates\n"
+	   "F (number) (number) - Flag cell using coordinates\n"
+	   "Q - Quit the game\n"
+	   "N - Start new game\n"
+	   "S (number) (number) - Change board height and width\n"
+	   "B (number) - Set amount of bombs");
+}
+
+void render_error() {
+    printf("Invalid command.\n");
+}
+
+void render_welcome(const GameInfo *game) {
+    printf("===Minesweeper===\n"
+	   "To start the game use following commands:\n");
+    if (!game->bombs)
+	printf("B (number) - Set amount of bombs\n");
+
+    if (!game->board.height || !game->board.width)
+	printf("S (number) (number) - Set board height and width\n");
+
+    printf("Type H for more commands.\n");
 }
 
 void render_game(const GameInfo *game) {
     clear_screen();
-    if (game->state == GAME_NOT_INIT) {
-	printf("Please setup settings for a board using (S height width)\n");
-    } else {
-	render_header(game);
+    if (game->state != GAME_NOT_INIT) {
+        render_header(game);
         render_board(&game->board);
+    } else {
+        render_welcome(game);
     }
 }
