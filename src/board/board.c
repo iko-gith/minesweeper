@@ -1,5 +1,6 @@
 #include <time.h>
 #include <stdlib.h>
+#include <stddef.h>
 #include "board.h"
 #include "../output/output.h"
 
@@ -23,18 +24,18 @@ void update_board_size(Board *board, int height, int width) {
     }
 }
 
-void init_board(Board *board) {
+void init_board(Board *board, int bomb_count) {
     write_to_file(OUTPUT_LOG, "\n> Initializing board:");
     
     // Очистка доски
     write_to_file(OUTPUT_LOG, "\nFreeing board memory");
     if (board->cells)
         free_board(board);
-
-    if (!board->height || board->height < 5 || 
-        !board->width  || board->width  < 5)
-	return;
     
+    // Проверка на наличие размеров доски и кол-ва бомб
+    if (!board->height || !board->width)
+	return;
+
     // Выделение памяти доски
     write_to_file(OUTPUT_LOG, "\nAllocating board memory (%d %d)",
 		  board->height, board->width);
@@ -59,7 +60,7 @@ void init_board(Board *board) {
     
     // Расставка бомб
     int bombs_placed = 0;
-    while (bombs_placed < BOMBS_COUNT) {
+    while (bombs_placed < bomb_count) {
         int x = rand() % board->height;
 	int y = rand() % board->width;
 
