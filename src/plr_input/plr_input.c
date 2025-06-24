@@ -12,7 +12,7 @@ void clear_input() {
 }
 
 void print_help() {
-    printf("");
+    //printf("");
 }
 
 int get_plr_input(int *x, int *y) {
@@ -41,6 +41,10 @@ int get_plr_input(int *x, int *y) {
 	case 'F':
 	    if (scanf("%d %d", x, y) == 2)
 		return ACTION_FLAG;
+	    break;
+	case 'S':
+	    if (scanf("%d %d", x, y) == 2)
+		return ACTION_CHANGE_BOARD;
 	    break;
 	case 'Q':
 	    return ACTION_QUIT;
